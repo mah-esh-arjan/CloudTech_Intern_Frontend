@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const status = ref('Active');
 const toStatus = ref('Logging');
@@ -22,6 +22,23 @@ const changeStatus = () => {
 
 }
 
+const buttonClass = computed(() => {
+
+    if (toStatus.value === 'Logging') {
+        return 'btn blue';
+    }
+
+    else if (toStatus.value === 'Inactive') {
+        return 'btn red';
+    }
+
+    else {
+        return 'btn green';
+    }
+
+});
+
+
 </script>
 
 
@@ -29,7 +46,8 @@ const changeStatus = () => {
 
     <div>
         <h1 class="font-bold">User's Status</h1>
-        <!-- Checking if else if else -->
+        <!-- Checking if else if else --> 
+         <!-- Could be computed property, just a reminder about using if else -->
         <div>
             <h1 v-if="status === 'Active'">
                 Eminem is <span class="bg-green-500 text-white"> Active </span>
@@ -45,8 +63,8 @@ const changeStatus = () => {
     </div>
 
 
-    <span>Change status to <button @click="changeStatus"
-            :class="status === 'Active' ? 'btn blue' : status === 'Logging' ? 'btn red' : 'btn green'"> {{ toStatus }}
+    <!-- A ternary operater changed into using computed property instead -->
+    <span>Change status to <button @click="changeStatus" :class="buttonClass"> {{ toStatus }}
         </button> </span>
 
 
