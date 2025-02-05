@@ -57,7 +57,9 @@ export default {
     <!-- one way binding putting reusable variables -->
     <a v-bind:href="link">Google</a>
     <a :href="link">:href="link" works</a>
+    <a :href="link" @click.prevent>@click.prevent disables click</a>
     <button v-bind:disabled="isButtonDisabled"> Enabled Button</button>
+
   </div>
 
   <div>
