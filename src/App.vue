@@ -9,6 +9,6 @@ import BlogParent from './components/Parent/BlogParent.vue';
 <template>
   <!-- <OptionsAPI /> -->
   <!-- <CompositionAPI /> -->
-  <!-- <Todo /> -->
-   <BlogParent />
+  <Todo />
+  <BlogParent />
 </template>
