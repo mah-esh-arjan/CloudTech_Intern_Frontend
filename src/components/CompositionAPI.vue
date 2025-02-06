@@ -46,13 +46,13 @@ const buttonClass = computed(() => {
         <!-- Could be computed property, just a reminder about using if else -->
         <div>
             <h1 v-if="status === 'Active'">
-                Eminem is <span class="bg-green-500 text-white"> Active </span>
+                Eminem is <span class="bg-green-500 text-white p-1"> Active </span>
             </h1>
             <h1 v-else-if="status === 'Logging'">
-                Eminem is <span class="bg-blue-500 text-white"> Logging </span>
+                Eminem is <span class="bg-blue-500 text-white p-1"> Logging </span>
             </h1>
             <h1 v-else>
-                Eminem is <span class="bg-red-500 text-white"> Inactive </span>
+                Eminem is <span class="bg-red-500 text-white p-1"> Inactive </span>
             </h1>
         </div>
 
@@ -68,7 +68,7 @@ const buttonClass = computed(() => {
 
 <style scoped>
 .btn {
-    padding: 2px;
+    padding: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
