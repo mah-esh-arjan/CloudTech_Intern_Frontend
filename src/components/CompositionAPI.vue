@@ -27,17 +27,13 @@ const buttonClass = computed(() => {
     if (toStatus.value === 'Logging') {
         return 'btn blue';
     }
-
     else if (toStatus.value === 'Inactive') {
         return 'btn red';
     }
-
     else {
         return 'btn green';
     }
-
 });
-
 
 </script>
 
@@ -46,8 +42,8 @@ const buttonClass = computed(() => {
 
     <div>
         <h1 class="font-bold">User's Status</h1>
-        <!-- Checking if else if else --> 
-         <!-- Could be computed property, just a reminder about using if else -->
+        <!-- Checking if else if else -->
+        <!-- Could be computed property, just a reminder about using if else -->
         <div>
             <h1 v-if="status === 'Active'">
                 Eminem is <span class="bg-green-500 text-white"> Active </span>
