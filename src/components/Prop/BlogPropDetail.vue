@@ -1,12 +1,21 @@
+<template>
+
+    <div v-for="(card, index) in dummyCard " :key="card.title">
+        <div v-if="currentId === (index + 1)">
+            <BlogProp :id="index + 1" :title="card.title" :desc="card.description" />
+        </div>
+    </div>
+</template>
+
 <script setup>
 import { ref } from 'vue';
-import BlogProp from '../Prop/BlogProp.vue';
-import { RouterLink } from 'vue-router';
+import { RouterView, useRoute } from 'vue-router';
+import BlogProp from './BlogProp.vue';
 
+const route = useRoute();
 
-const handleTitleAction = (title) => {
-    console.log(title + "Called Logger ");
-}
+const currentId = Number(route.params.id);
+const props = defineProps(['title', 'desc', 'id']);
 
 const dummyCard = ref([
     {
@@ -27,16 +36,6 @@ const dummyCard = ref([
     },
 ]);
 
+console.log(currentId)
 
 </script>
-
-<template>
-
-    <div v-for="(card, index) in dummyCard " :key="card.title">
-
-        <BlogProp :id="index + 1" :title="card.title" :desc="card.description"  /> 
-        <RouterLink :to="`/blogs/${index + 1}`">Read more</RouterLink>
-
-    </div>
-
-</template>

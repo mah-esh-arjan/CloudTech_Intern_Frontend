@@ -1,20 +1,26 @@
 <script setup>
-import OptionsAPI from './components/optionsAPI.vue';
-import CompositionAPI from './components/CompositionAPI.vue';
-import Todo from './components/Todo.vue';
-import BlogParent from './components/Parent/BlogParent.vue';
-import SlotParent from './components/Parent/SlotParent.vue';
-import Tabs from './components/Tabs.vue';
-import LifeCycle from './components/LifeCycle.vue';
+
+
 </script>
 
-
 <template>
-  <!-- <OptionsAPI /> -->
-  <!-- <CompositionAPI /> -->
-  <!-- <Todo />
-  <BlogParent /> -->
-  <!-- <SlotParent /> -->
-  <!-- <Tabs /> -->
-  <LifeCycle />
+  <div>
+    <nav class="nav">
+      <router-link to="/todo">Todo</router-link>
+      <router-link to="/blogs">Blogs</router-link>
+      <router-link to="/slot">Slot</router-link>
+      <router-link to="/tabs">Tabs</router-link>
+      <router-link to="/about">About</router-link>
+    </nav>
+    <router-view></router-view>
+  </div>
 </template>
+
+
+<style scoped>
+.nav{
+  display: flex;
+  gap: 45px;
+  margin-bottom: 160px;
+}
+</style>
