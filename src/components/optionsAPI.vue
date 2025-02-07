@@ -31,7 +31,6 @@ export default {
     }
 
   }
-
 }
 
 </script>
@@ -47,7 +46,7 @@ export default {
 
   <div>
     <!-- Loop with for like .map in react with key as well -->
-     <p>Using for loop with key</p>
+    <p>Using for loop with key</p>
     <ul>
       <li v-for="number in numbers" :key="number">{{ number }}</li>
     </ul>
@@ -74,10 +73,8 @@ export default {
   </div>
 
   <div v-show="showData"> It wil show if showData is true</div>
-  <button @click="toggleShowData">Toggle showData </button>
+  <button @click="toggleShowData" class="bg-blue-500 text-white p-1">Toggle showData </button>
 
 </template>
 
-<style scoped>
-
-</style> 
+<style scoped></style>
