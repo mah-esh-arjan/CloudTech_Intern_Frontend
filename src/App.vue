@@ -5,6 +5,7 @@ import Todo from './components/Todo.vue';
 import BlogParent from './components/Parent/BlogParent.vue';
 import SlotParent from './components/Parent/SlotParent.vue';
 import Tabs from './components/Tabs.vue';
+import LifeCycle from './components/LifeCycle.vue';
 </script>
 
 
@@ -14,5 +15,6 @@ import Tabs from './components/Tabs.vue';
   <!-- <Todo />
   <BlogParent /> -->
   <!-- <SlotParent /> -->
-  <Tabs />
+  <!-- <Tabs /> -->
+  <LifeCycle />
 </template>

@@ -1,4 +1,5 @@
 <script setup>
+
 import optionsAPI from './optionsAPI.vue';
 import CompositionAPI from './CompositionAPI.vue';
 import { ref } from 'vue';
@@ -7,13 +8,14 @@ const tabs = {
     optionsAPI: optionsAPI,
     CompositionAPI: CompositionAPI
 };
-const activeTab = ref(tabs.CompositionAPI); ;
+const activeTab = ref(tabs.CompositionAPI);
 
 </script>
+
 <template>
     <div class="container">
         <div class="tabs">
-            <button @click="activeTab = tabs.CompositionAPI; console.log(activeTab)"
+            <button @click="activeTab = tabs.CompositionAPI"
                 :class="activeTab.value === tabs.CompositionAPI ? 'button-active' : 'button-inactive'">
                 Composition API
             </button>
