@@ -1,41 +1,22 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import BlogProp from '../Prop/BlogProp.vue';
 import { RouterLink } from 'vue-router';
+import { useStore } from 'vuex';
 
+const store = useStore();
+const allCards = computed(() => store.getters.allCards);
 
 const handleTitleAction = (title) => {
-    console.log(title + "Called Logger ");
+    console.log(title + " Called Logger ");
 }
-
-const dummyCard = ref([
-    {
-        "title": "Learn Vue Router",
-        "description": "Understand how to set up and use Vue Router for navigation in a Vue.js application."
-    },
-    {
-        "title": "Introduction to Vue.js",
-        "description": "A beginner-friendly guide to understanding Vue.js and its core concepts."
-    },
-    {
-        "title": "State Management with Vuex",
-        "description": "Learn how to manage global state in a Vue.js application using Vuex."
-    },
-    {
-        "title": "Working with Slots in Vue",
-        "description": "Explore how to use slots for creating flexible and reusable components in Vue.js."
-    },
-]);
-
-
 </script>
 
 <template>
 
-    <div v-for="(card, index) in dummyCard " :key="card.title">
-
-        <BlogProp :id="index + 1" :title="card.title" :desc="card.description"  /> 
-        <RouterLink :to="`/blogs/${index + 1}`">Read more</RouterLink>
+    <div v-for="card in allCards" :key="card.id">
+        <BlogProp :id="card.id" :title="card.title" :desc="card.description" @handleTitle="handleTitleAction" :Read="card.Read" />
+        <RouterLink :to="`/blogs/${card.id}`">Read more</RouterLink>
 
     </div>
 

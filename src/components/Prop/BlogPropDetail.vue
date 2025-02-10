@@ -1,41 +1,28 @@
-<template>
-
-    <div v-for="(card, index) in dummyCard " :key="card.title">
-        <div v-if="currentId === (index + 1)">
-            <BlogProp :id="index + 1" :title="card.title" :desc="card.description" />
-        </div>
-    </div>
-</template>
-
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { RouterView, useRoute } from 'vue-router';
 import BlogProp from './BlogProp.vue';
+import { useStore } from 'vuex';
 
 const route = useRoute();
 
 const currentId = Number(route.params.id);
-const props = defineProps(['title', 'desc', 'id']);
 
-const dummyCard = ref([
-    {
-        "title": "Learn Vue Router",
-        "description": "Understand how to set up and use Vue Router for navigation in a Vue.js application."
-    },
-    {
-        "title": "Introduction to Vue.js",
-        "description": "A beginner-friendly guide to understanding Vue.js and its core concepts."
-    },
-    {
-        "title": "State Management with Vuex",
-        "description": "Learn how to manage global state in a Vue.js application using Vuex."
-    },
-    {
-        "title": "Working with Slots in Vue",
-        "description": "Explore how to use slots for creating flexible and reusable components in Vue.js."
-    },
-]);
+const store = useStore();
+const card = computed(() => store.getters.cardId(currentId));
 
-console.log(currentId)
+console.log(currentId);
+console.log(card);
+
 
 </script>
+
+<template>
+
+    <div v-if="card">
+        <BlogProp :id="card.id" :title="card.title" :desc="card.description" :Read="card.Read" />
+    </div>
+    <div v-else>
+       <h1> The id was not found in the array</h1> 
+        </div>
+</template>
