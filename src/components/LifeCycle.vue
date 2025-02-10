@@ -10,7 +10,7 @@ onBeforeMount(() => {
 onMounted(() => {
     console.log('Counter & Button is rendered');
 });
-    
+
 onBeforeUpdate(() => {
     console.log(alert('Update has been batched'));
 
