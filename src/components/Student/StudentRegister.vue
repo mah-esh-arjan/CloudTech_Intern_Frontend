@@ -1,8 +1,9 @@
 <script setup>
 
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { required, minLength, helpers } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
+import axios from 'axios';
 
 const formData = ref({
     name: '',
@@ -34,15 +35,32 @@ const rules = computed(() => {
 
 const $v = useVuelidate(rules, formData)
 
-const submitForm = async() => {
+
+
+
+const submitForm = async () => {
     const isValid = await $v.value.$validate();
 
     if (!isValid) {
         return alert('Form is not valid');
     }
 
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/api/student-register',
+            formData.value,
+            { headers: { 'Content-Type': 'application/json' } })
+        if (response.data.status === 409) {
+            return alert('Username has been taken');
+        }
+        console.log(response.data);
+    }
+
+    catch (err) {
+        console.log('error', err);
+    }
     console.log('Form submitted:', formData.value);
 };
+
 </script>
 
 <template>
