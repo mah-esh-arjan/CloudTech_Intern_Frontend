@@ -41,12 +41,29 @@ const store = createStore({
       return state.dummyCard.find((card) => card.id === id);
     },
   },
+
   mutations: {
     toggleRead(state, id) {
       const blog = state.dummyCard.find((card) => card.id === id);
       if (blog) {
         blog.Read = !blog.Read;
       }
+    },
+    logRead(state, id) {
+      const blog = state.dummyCard.find((card) => card.id === id);
+      if(blog){
+        console.log('Blog was found');
+      }
+      else{
+        console.log('Blog was not found');
+      }
+    },
+  },
+
+  actions: {
+    toggleReadStatusAndLog({ commit }, id) {
+      commit('logRead', id);      
+      commit('toggleRead', id);  
     },
   },
 });

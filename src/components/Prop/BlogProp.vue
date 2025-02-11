@@ -16,6 +16,8 @@
                     {{ Read ? "Mark as Unread" : "Mark as Read" }}
                 </button>
 
+                <button class="bg-yellow-500 p-2" @click="toggleReadAndLog">Log</button>
+
                 <span :class="Read ? 'bg-blue-500 p-2' : 'bg-red-500 p-2'"> {{ Read ? 'Read' : 'Not Read' }} </span>
             </div>
 
@@ -27,14 +29,17 @@
 <script setup>
 import { useStore } from 'vuex';
 
-
 const store = useStore();
 
-const toggleReadStatus = (id) => {
+const toggleReadStatus = () => {
     store.commit('toggleRead', props.id)
 }
 
-const emit = defineEmits(['hanleTitle']);
+const toggleReadAndLog  = () => {
+    store.dispatch('toggleReadStatusAndLog', props.id);
+}
+
+const emit = defineEmits(['handleTitle']);
 const props = defineProps({
     title: String,
     desc: String,

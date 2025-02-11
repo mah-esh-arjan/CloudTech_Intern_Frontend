@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue';
 import BlogProp from '../Prop/BlogProp.vue';
-import { RouterLink } from 'vue-router';
 import { useStore } from 'vuex';
+import { RouterLink } from 'vue-router';
 
 const store = useStore();
 const allCards = computed(() => store.getters.allCards);
