@@ -1,7 +1,9 @@
 <script setup>
+import router from '@/views/router';
 import axios from 'axios';
 import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import ErrorSlot from '../Prop/ErrorSlot.vue';
 
 const token = localStorage.getItem('token');
 
@@ -20,17 +22,42 @@ const showStudent = async () => {
                 }
             }
         )
+        if (response.data.code === 404) {
+            studentData.value = null;
+        }
         studentData.value = response.data.data
-        console.log(studentData);
     }
     catch (err) {
         console.error('Error:', err);
     }
 }
 
-const handleEdit = () => {
-    console.log(studentData);
+const handleEdit = async () => {
+
+    try {
+        console.log(token);
+        const response = await axios.put(`http://127.0.0.1:8000/api/student-update/${id}`,
+            studentData.value,
+            {
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+        if (response.data.status === 201) {
+            alert('Student have been update successfully');
+            router.push('/student-list');
+
+        }
+
+    }
+    catch (err) {
+        console.error('Error:', err);
+    }
+
 }
+
 
 onMounted(showStudent);
 
@@ -82,7 +109,10 @@ onMounted(showStudent);
         </form>
     </div>
     <div v-else>
-        <h1> Student doesnt exists</h1>
+        <ErrorSlot>
+            <template #code>404</template>
+            <template #message> Student doesn't exist</template>
+        </ErrorSlot>
     </div>
 
 </template>
