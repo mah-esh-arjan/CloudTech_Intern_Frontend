@@ -12,6 +12,8 @@
       <router-link to="/tabs">Tabs</router-link>
       <router-link to="/about">About</router-link>
       <router-link to="/student-register">Register</router-link>
+      <router-link to="/student-login">Login</router-link>
+     
     </nav>
     <router-view></router-view>
   </div>

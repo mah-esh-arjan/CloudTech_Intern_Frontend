@@ -13,6 +13,7 @@ const formData = ref({
     course: 'Commerce'
 });
 
+
 const lessAge = (value) => {
     return value < 99;
 }
@@ -52,6 +53,7 @@ const submitForm = async () => {
         if (response.data.status === 409) {
             return alert('Username has been taken');
         }
+        alert('Student has been registered successfully');
         console.log(response.data);
     }
 
@@ -69,7 +71,7 @@ const submitForm = async () => {
         <form @submit.prevent="submitForm" class="space-y-4">
 
             <label class="block">
-                <span class="text-gray-700">Name:</span>
+                <span class="text-gray-700">Username:</span>
                 <input type="text" v-model="formData.name" class="w-full p-2 border rounded" />
                 <span v-if="$v.name.$error">
                     {{ $v.name.$errors[0].$message }}
