@@ -11,6 +11,7 @@
       <router-link to="/slot">Slot</router-link>
       <router-link to="/tabs">Tabs</router-link>
       <router-link to="/about">About</router-link>
+      <router-link to="/student-register">Register</router-link>
     </nav>
     <router-view></router-view>
   </div>
@@ -18,7 +19,7 @@
 
 
 <style scoped>
-.nav{
+.nav {
   display: flex;
   gap: 45px;
   margin-bottom: 160px;

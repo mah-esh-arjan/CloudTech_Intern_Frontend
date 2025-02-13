@@ -7,6 +7,7 @@ import BlogPropDetail from "@/components/Prop/BlogPropDetail.vue";
 import About from "@/components/Parent/About.vue";
 import AboutTeam from "@/components/Prop/AboutTeam.vue";
 import AboutCompany from "@/components/Prop/AboutCompany.vue";
+import StudentRegister from "@/components/Student/StudentRegister.vue";
 
 const routes = [
   { path: "/todo", component: Todo },
@@ -25,7 +26,8 @@ const routes = [
         component: AboutCompany
       }
     ]
-  }
+  },
+  {path: "/student-register", component: StudentRegister}
 ];
 
 const router = createRouter({
