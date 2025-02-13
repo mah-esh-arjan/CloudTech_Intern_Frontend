@@ -71,7 +71,8 @@ onMounted(fetchStudents);
                     <th class="px-4 py-2 border">Age</th>
                     <th class="px-4 py-2 border">Gender</th>
                     <th class="px-4 py-2 border">Course</th>
-                    <th class="px-4 py-2 border">Actions</th>
+                    <th class="px-4 py-2 border">Edit</th>
+                    <th class="px-4 py-2 border">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,11 +86,14 @@ onMounted(fetchStudents);
                     <td class="px-4 py-2 border">{{ student.age }}</td>
                     <td class="px-4 py-2 border">{{ student.gender }}</td>
                     <td class="px-4 py-2 border">{{ student.course }}</td>
-                    <td class="px-4 py-2 border flex space-x-2">
+                    <td class="px-4 py-2 border space-x-2">
                         <button class="px-4 py-2 bg-blue-500 text-white rounded"
                             @click="showStudent(student.student_id)">Edit</button>
+                    
+                    </td>
+                    <td class="px-4 py-2 border space-x-2">
                         <button class="px-4 py-2 bg-red-500 text-white rounded"
-                            @click="deleteStudent(student.student_id)">Delete</button>
+                        @click="deleteStudent(student.student_id)">Delete</button>
                     </td>
                 </tr>
             </tbody>
