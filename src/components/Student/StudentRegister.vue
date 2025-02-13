@@ -4,6 +4,8 @@ import { computed, ref, onMounted } from 'vue';
 import { required, minLength, helpers } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import axios from 'axios';
+import Compressor from 'compressorjs';
+
 
 const formData = ref({
     name: '',
@@ -20,8 +22,21 @@ const imageUpload = (event) => {
 
     if (file) {
         console.log('File MIME type:', file.type);
-        console.log('File MIME type:', file.size);
-        formData.value.image = file;
+        
+        console.log('File Size:', file.size);
+        
+        console.log(file.name);
+
+        new Compressor(file,{
+            quality: 0.6,
+            success(result){
+                formData.value.image = result;
+                
+                console.log("compressed file size:", result.size);
+                console.log("compressed file type:", formData.value.image.type);
+                console.log("compressed file type:", formData.value.image.name);
+            }       
+        })
     }
 
 }
@@ -31,7 +46,7 @@ const lessAge = (value) => {
     return value < 99;
 }
 
-const allowedMime = ['image/jpg', 'image/png']
+const allowedMime = ['image/jpg', 'image/png','image/jpeg']
 
 const mimeType = (value) => {
     return value ? allowedMime.includes(value.type) : false;
