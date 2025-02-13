@@ -8,6 +8,9 @@ import About from "@/components/Parent/About.vue";
 import AboutTeam from "@/components/Prop/AboutTeam.vue";
 import AboutCompany from "@/components/Prop/AboutCompany.vue";
 import StudentRegister from "@/components/Student/StudentRegister.vue";
+import StudentLogin from "@/components/Student/StudentLogin.vue";
+import StudentList from "@/components/Student/StudentList.vue";
+import StudentEdit from "@/components/Student/StudentEdit.vue";
 
 const routes = [
   { path: "/todo", component: Todo },
@@ -27,7 +30,10 @@ const routes = [
       }
     ]
   },
-  {path: "/student-register", component: StudentRegister}
+  {path: "/student-register", component: StudentRegister},
+  {path: "/student-login", component: StudentLogin},
+  {path: "/student-list", component: StudentList},  
+  {path: "/student-edit/:id", component: StudentEdit}
 ];
 
 const router = createRouter({
