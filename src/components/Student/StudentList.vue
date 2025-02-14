@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const students = ref(null);
 const token = localStorage.getItem('token');
+const url = 'http://127.0.0.1:8000/images';
 
 const fetchStudents = async () => {
 
@@ -79,9 +80,9 @@ onMounted(fetchStudents);
                 <tr v-for="student in students" :key="student.student_id" class="hover:bg-gray-50">
                     <td class="px-4 py-2 border">{{ student.student_id }}</td>
                     <td class="px-4 py-2 border">{{ student.name }}</td>
-                    <td class="px-4 py-2 border">
-                        <img :src="`/images/${student.image_path}`" alt="Not Found"
-                            class="w-16 h-16 object-cover mx-auto">
+                    <td class="px-4 py-2 w-64 h-40 border">
+                        <img :src="`${url}/${student.image_path}`" alt="Not Found"
+                            class="object-cover mx-auto">
                     </td>
                     <td class="px-4 py-2 border">{{ student.age }}</td>
                     <td class="px-4 py-2 border">{{ student.gender }}</td>
@@ -89,11 +90,11 @@ onMounted(fetchStudents);
                     <td class="px-4 py-2 border space-x-2">
                         <button class="px-4 py-2 bg-blue-500 text-white rounded"
                             @click="showStudent(student.student_id)">Edit</button>
-                    
+
                     </td>
                     <td class="px-4 py-2 border space-x-2">
                         <button class="px-4 py-2 bg-red-500 text-white rounded"
-                        @click="deleteStudent(student.student_id)">Delete</button>
+                            @click="deleteStudent(student.student_id)">Delete</button>
                     </td>
                 </tr>
             </tbody>
