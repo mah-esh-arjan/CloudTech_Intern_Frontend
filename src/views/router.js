@@ -11,6 +11,7 @@ import StudentRegister from "@/components/Student/StudentRegister.vue";
 import StudentLogin from "@/components/Student/StudentLogin.vue";
 import StudentList from "@/components/Student/StudentList.vue";
 import StudentEdit from "@/components/Student/StudentEdit.vue";
+import SoftDelete from "@/components/SoftDelete.vue";
 
 const routes = [
   { path: "/todo", component: Todo },
@@ -18,22 +19,25 @@ const routes = [
   { path: "/tabs", component: Tabs },
   { path: "/blogs", component: BlogParent },
   { path: "/blogs/:id", component: BlogPropDetail },
-  { path: "/about", component: About,
+  {
+    path: "/about",
+    component: About,
     children: [
       {
-        path: 'team',
+        path: "team",
         component: AboutTeam,
       },
       {
-        path: 'Company',
-        component: AboutCompany
-      }
-    ]
+        path: "Company",
+        component: AboutCompany,
+      },
+    ],
   },
-  {path: "/student-register", component: StudentRegister},
-  {path: "/student-login", component: StudentLogin},
-  {path: "/student-list", component: StudentList},  
-  {path: "/student-edit/:id", component: StudentEdit}
+  { path: "/soft", component: SoftDelete },
+  { path: "/student-register", component: StudentRegister },
+  { path: "/student-login", component: StudentLogin },
+  { path: "/student-list", component: StudentList },
+  { path: "/student-edit/:id", component: StudentEdit },
 ];
 
 const router = createRouter({

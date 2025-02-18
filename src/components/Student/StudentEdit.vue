@@ -7,14 +7,22 @@ import ErrorSlot from '../Prop/ErrorSlot.vue';
 import Compressor from 'compressorjs';
 
 
+
 const token = localStorage.getItem('token');
 
 const url = 'http://127.0.0.1:8000/images';
 
-const studentData = ref(null);
+const studentData = ref({
+    name: '',
+    age: null,
+    gender: '',
+    course: '',
+    image: null,
+});
 
 const route = useRoute();
 const id = Number(route.params.id);
+const previewUrl = ref("");
 
 const showStudent = async () => {
 
@@ -40,17 +48,28 @@ const handleEdit = async () => {
 
     try {
         console.log(token);
-        const response = await axios.put(`http://127.0.0.1:8000/api/student-update/${id}`,
-            studentData.value,
+        console.log(studentData);
+
+        const formData = new FormData();
+        formData.append('name', studentData.value.name)
+        formData.append('gender', studentData.value.gender)
+        formData.append('age', studentData.value.age)
+        formData.append('course', studentData.value.course)
+        formData.append('image', studentData.value.image)
+        formData.append('_method', 'PUT');
+
+        const response = await axios.post(`http://127.0.0.1:8000/api/student-update/${id}`,
+            formData,
             {
                 headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`,
                 }
             });
 
         if (response.data.status === 201) {
             alert('Student have been update successfully');
+
             router.push('/student-list');
 
         }
@@ -64,18 +83,18 @@ const handleEdit = async () => {
 
 const imageUpload = (event) => {
 
-const file = event.target.files[0];
+    const file = event.target.files[0];
 
-if (file) {
+    if (file) {
 
-    new Compressor(file,{
-        quality: 0.6,
-        success(result){
-            formData.value.image = result;
-            
-        }       
-    })
-}
+        new Compressor(file, {
+            quality: 0.6,
+            success(result) {
+                studentData.value.image = result;
+                previewUrl.value = URL.createObjectURL(result);
+            }
+        })
+    }
 
 }
 
@@ -92,11 +111,19 @@ onMounted(showStudent);
 
 
             <div class="flex flex-col items-center gap-[10px] my-auto mb-[20px]">
-                <span class="text-gray-700 underline">Profile Picutre:</span>
-                <img :src="`${url}/${studentData.image_path}`" alt="Not Found"
-                    class="rounded-full h-[200px] w-[240px] bg-gray-300">
-
+                <span class="text-gray-700 underline">Profile Picutre:</span> 
+                <img :src="previewUrl || `${url}/${studentData.image_path}`" alt="Not Found"
+                    class="rounded-full h-[200px] w-[200px] bg-gray-300 object-cover">
             </div>
+
+            <div class="p-4 mt-4">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                    file</label>
+                <input
+                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="file_input" type="file" @change="imageUpload" />
+            </div>
+
 
             <label class="block">
                 <span class="text-gray-700">Username:</span>
