@@ -4,8 +4,12 @@ import axios from 'axios';
 import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ErrorSlot from '../Prop/ErrorSlot.vue';
+import Compressor from 'compressorjs';
+
 
 const token = localStorage.getItem('token');
+
+const url = 'http://127.0.0.1:8000/images';
 
 const studentData = ref(null);
 
@@ -58,6 +62,22 @@ const handleEdit = async () => {
 
 }
 
+const imageUpload = (event) => {
+
+const file = event.target.files[0];
+
+if (file) {
+
+    new Compressor(file,{
+        quality: 0.6,
+        success(result){
+            formData.value.image = result;
+            
+        }       
+    })
+}
+
+}
 
 onMounted(showStudent);
 
@@ -69,6 +89,15 @@ onMounted(showStudent);
         <h2 class="text-xl font-bold mb-4">Editing Form</h2>
 
         <form @submit.prevent="handleEdit" class="space-y-4">
+
+
+            <div class="flex flex-col items-center gap-[10px] my-auto mb-[20px]">
+                <span class="text-gray-700 underline">Profile Picutre:</span>
+                <img :src="`${url}/${studentData.image_path}`" alt="Not Found"
+                    class="rounded-full h-[200px] w-[240px] bg-gray-300">
+
+            </div>
+
             <label class="block">
                 <span class="text-gray-700">Username:</span>
                 <input type="text" v-model="studentData.name" class="w-full p-2 border rounded" />
