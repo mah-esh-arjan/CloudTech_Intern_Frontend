@@ -4,18 +4,52 @@ import { computed, ref, onMounted } from 'vue';
 import { required, minLength, helpers } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import axios from 'axios';
+import Compressor from 'compressorjs';
+
 
 const formData = ref({
     name: '',
     password: '',
     age: null,
     gender: 'M',
-    course: 'Commerce'
+    course: 'Commerce',
+    image: null,
 });
+
+const imageUpload = (event) => {
+
+    const file = event.target.files[0];
+
+    if (file) {
+        console.log('File MIME type:', file.type);
+        
+        console.log('File Size:', file.size);
+        
+        console.log(file.name);
+
+        new Compressor(file,{
+            quality: 0.6,
+            success(result){
+                formData.value.image = result;
+                
+                console.log("compressed file size:", result.size);
+                console.log("compressed file type:", formData.value.image.type);
+                console.log("compressed file type:", formData.value.image.name);
+            }       
+        })
+    }
+
+}
 
 
 const lessAge = (value) => {
     return value < 99;
+}
+
+const allowedMime = ['image/jpg', 'image/png','image/jpeg']
+
+const mimeType = (value) => {
+    return value ? allowedMime.includes(value.type) : false;
 }
 
 const rules = computed(() => {
@@ -29,6 +63,9 @@ const rules = computed(() => {
         age: {
             required,
             lessAge: helpers.withMessage(' Age must be less than 99', lessAge),
+        },
+        image: {
+            mimeType: helpers.withMessage('Image must be either png or jpg', mimeType)
         }
     }
 
@@ -49,7 +86,7 @@ const submitForm = async () => {
     try {
         const response = await axios.post('http://127.0.0.1:8000/api/student-register',
             formData.value,
-            { headers: { 'Content-Type': 'application/json' } })
+            { headers: { 'Content-Type': 'multipart/form-data' } })
         if (response.data.status === 409) {
             return alert('Username has been taken');
         }
@@ -117,6 +154,18 @@ const submitForm = async () => {
                     <option value="Science">Science</option>
                 </select>
             </div>
+
+            <div class="p-4 mt-4">
+
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                    file</label>
+                <input
+                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="file_input" type="file" @change="imageUpload" />
+
+                <span v-if="$v.image.$error" class="text-red-500"> {{ $v.image.$errors[0].$message }} </span>
+            </div>
+
 
             <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full">
                 Submit
