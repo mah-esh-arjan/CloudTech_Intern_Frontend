@@ -12,6 +12,7 @@ import StudentLogin from "@/components/Student/StudentLogin.vue";
 import StudentList from "@/components/Student/StudentList.vue";
 import StudentEdit from "@/components/Student/StudentEdit.vue";
 import SoftDelete from "@/components/SoftDelete.vue";
+import BookList from "@/components/Book/BookList.vue";
 
 const routes = [
   { path: "/todo", component: Todo },
@@ -34,10 +35,13 @@ const routes = [
     ],
   },
   { path: "/soft", component: SoftDelete },
+  // Path for Student:
   { path: "/student-register", component: StudentRegister },
   { path: "/student-login", component: StudentLogin },
   { path: "/student-list", component: StudentList },
   { path: "/student-edit/:id", component: StudentEdit },
+  // Below is for books:
+  { path: "/books-list", component: BookList },
 ];
 
 const router = createRouter({
