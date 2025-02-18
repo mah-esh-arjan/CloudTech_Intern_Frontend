@@ -8,11 +8,11 @@
             <p class="font-normal text-gray-700 dark:text-gray-400">{{ desc }}</p>
             <div class="flex justify-between">
                 <button @click="handleLog"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     Log it </button>
 
                 <button @click="toggleReadStatus" class="mt-2 px-4 py-2 text-white rounded"
-                    :class="read ? 'bg-green-500' : 'bg-red-500'">
+                    :class="Read ? 'text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900' : 'text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'">
                     {{ Read ? "Mark as Unread" : "Mark as Read" }}
                 </button>
 
@@ -35,7 +35,7 @@ const toggleReadStatus = () => {
     store.commit('toggleRead', props.id)
 }
 
-const toggleReadAndLog  = () => {
+const toggleReadAndLog = () => {
     store.dispatch('toggleReadStatusAndLog', props.id);
 }
 
