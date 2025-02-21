@@ -1,8 +1,13 @@
 <script setup>
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const books = ref();
+const url = 'http://127.0.0.1:8000/BookImages';
+const imagePath = '/images/Kitab.png';
+
+const router = useRouter();
 
 const fetchBooks = async () => {
 
@@ -21,31 +26,69 @@ const fetchBooks = async () => {
     }
 }
 
+const deleteBook = async (id) => {
+
+    try {
+
+        const response = await axios.delete(`http://127.0.0.1:8000/api/book-delete/${id}`);
+
+        if (response.data.status === 200) {
+            alert(`${response.data.data.title} has been deleted`);
+
+        }
+        fetchBooks();
+
+    }
+
+    catch (err) {
+        console.error("Error:", err);
+    }
+
+}
+
+const editBook = (id) => {
+    router.push(`/books-edit/${id}`);
+}
+
 onMounted(fetchBooks);
 </script>
 
 <template>
 
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-4 gap-4" id="section">
         <div v-for="book in books" :key="book.id"
-            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            class="flex-col max-h-[375px] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
 
-            <img class="rounded-t-lg" src="https://picsum.photos/400/300" alt="" />
+            <img class="h-1/2 w-full" :src="book.image_path === null ? imagePath : `${url}/${book.image_path}`"
+                alt="Not Found" />
 
-            <div class="p-5">
+            <div class="p-5 flex flex-col justify-between">
 
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ book.title }}</h5>
+                <div class="mb-6!">
+                    <h5 class=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ book.title }}</h5>
 
-                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ book.desc }}</p>
-                <button
-                    class="gap-[2px] inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Read more
-                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 5h12m0 0L9 1m4 4L9 9" />
-                    </svg>
-                </button>
+                </div>
+
+
+                <div class="flex flex-col">
+                    <div class="">
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ book.desc.length > 55 ?
+                            book.desc.substring(0, 55) + '...' : book.desc }}</p>
+
+                    </div>
+                    <div class="flex justify-between">
+
+                        <button @click="editBook(book.id)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Edit
+                        </button>
+
+                        <button @click="deleteBook(book.id)"
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            Delete
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </div>
 

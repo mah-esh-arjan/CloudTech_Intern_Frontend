@@ -34,7 +34,7 @@ const showStudent = async () => {
                 }
             }
         )
-        if (response.data.code === 404) {
+        if (response.data.status === 404) {
             studentData.value = null;
         }
         studentData.value = response.data.data

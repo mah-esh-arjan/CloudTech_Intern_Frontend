@@ -13,9 +13,12 @@ import StudentList from "@/components/Student/StudentList.vue";
 import StudentEdit from "@/components/Student/StudentEdit.vue";
 import SoftDelete from "@/components/SoftDelete.vue";
 import BookList from "@/components/Book/BookList.vue";
+import BookEdit from "@/components/Book/BookEdit.vue";
+import BookCreate from "@/components/Book/BookCreate.vue";
+import AdminLogin from "@/components/Admin/AdminLogin.vue";
 
 const routes = [
-  { path: "/todo", component: Todo },
+  { path: "/tab", name: 'root', component: Todo },
   { path: "/slot", component: SlotParent },
   { path: "/tabs", component: Tabs },
   { path: "/blogs", component: BlogParent },
@@ -42,6 +45,10 @@ const routes = [
   { path: "/student-edit/:id", component: StudentEdit },
   // Below is for books:
   { path: "/books-list", component: BookList },
+  { path: "/books-edit/:id", component: BookEdit },
+  { path: "/create-book", component: BookCreate },
+
+  { path: "/admin-login", component: AdminLogin },
 ];
 
 const router = createRouter({
