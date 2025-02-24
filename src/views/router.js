@@ -16,6 +16,8 @@ import BookList from "@/components/Book/BookList.vue";
 import BookEdit from "@/components/Book/BookEdit.vue";
 import BookCreate from "@/components/Book/BookCreate.vue";
 import AdminLogin from "@/components/Admin/AdminLogin.vue";
+import StudentDetails from "@/components/Student/StudentDetails.vue";
+import StudentBooks from "@/components/Student/StudentBooks.vue";
 
 const routes = [
   { path: "/tab", name: 'root', component: Todo },
@@ -43,6 +45,8 @@ const routes = [
   { path: "/student-login", component: StudentLogin },
   { path: "/student-list", component: StudentList },
   { path: "/student-edit/:id", component: StudentEdit },
+  { path: "/student-details/:id", component: StudentDetails },
+  { path: "/student-books/:id", component: StudentBooks },
   // Below is for books:
   { path: "/books-list", component: BookList },
   { path: "/books-edit/:id", component: BookEdit },

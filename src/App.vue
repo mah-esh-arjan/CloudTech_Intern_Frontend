@@ -18,8 +18,10 @@
 
       <router-link to="/student-register">Register</router-link>
       <router-link to="/student-login">Student-Login</router-link>
+      <router-link to="/student-details">Student-Details</router-link>
 
       <router-link to="/admin-login" >Admin-Login</router-link>
+
 
     </nav>
     <router-view></router-view>
