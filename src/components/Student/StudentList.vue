@@ -51,7 +51,7 @@ const deleteStudent = async (id) => {
 
 const showStudent = (id) => {
 
-    router.push(`/student-edit/${id}`);
+    router.push(`/student/student-edit/${id}`);
 
 }
 

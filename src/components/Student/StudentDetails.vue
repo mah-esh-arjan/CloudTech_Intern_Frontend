@@ -1,14 +1,15 @@
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { onMounted, reactive, ref } from 'vue';
 import axios from 'axios';
 
 
-
+const router = useRouter();
 const url = 'http://127.0.0.1:8000/images';
 
 const route = useRoute();
 const id = Number(route.params.id);
+const token = localStorage.getItem('token');
 
 const studentData = ref({
     name: '',
@@ -24,6 +25,11 @@ const showStudentDetails = async () => {
 
     try {
         const response = await axios.get(`http://127.0.0.1:8000/api/student-book/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
 
         )
         console.log(response)
@@ -31,11 +37,20 @@ const showStudentDetails = async () => {
             studentData.value = null;
         }
         studentData.value = response.data.student
-        bookCount.value = response.data.Count
+        bookCount.value = response.data.count
     }
     catch (err) {
         console.error('Error:', err);
     }
+}
+
+const handleEdit = (id) => {
+    router.push(`/student/student-edit/${id}`);
+}
+
+const handleBookDetails = (id) => {
+    router.push(`/student/student-books/${id}`);
+
 }
 
 onMounted(showStudentDetails);
@@ -79,9 +94,17 @@ onMounted(showStudentDetails);
                 </div>
 
 
-                <div class="flex justify-between">
+                <div class="flex justify-between border-b pb-2">
                     <span class="font-medium">Number of books taken:</span>
                     <span class="text-gray-900 font-semibold">{{ bookCount }}</span>
+                </div>
+
+                <div class="flex justify-between border-b pb-2">
+                    <button @click="handleEdit(studentData.student_id)"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+
+                    <button @click="handleBookDetails(studentData.student_id)"
+                        class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Books</button>
                 </div>
             </div>
 

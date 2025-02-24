@@ -7,13 +7,21 @@ const books = ref();
 const url = 'http://127.0.0.1:8000/BookImages';
 const imagePath = '/images/Kitab.png';
 
+const token = localStorage.getItem('token');
+
+
 const router = useRouter();
 
 const fetchBooks = async () => {
 
     try {
 
-        const response = await axios.get('http://127.0.0.1:8000/api/books-list');
+        const response = await axios.get('http://127.0.0.1:8000/api/books-list',
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
         if (response.data.status = 200) {
             books.value = response.data.data;
@@ -30,7 +38,13 @@ const deleteBook = async (id) => {
 
     try {
 
-        const response = await axios.delete(`http://127.0.0.1:8000/api/book-delete/${id}`);
+        const response = await axios.delete(`http://127.0.0.1:8000/api/book-delete/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
 
         if (response.data.status === 200) {
             alert(`${response.data.data.title} has been deleted`);
@@ -47,7 +61,7 @@ const deleteBook = async (id) => {
 }
 
 const editBook = (id) => {
-    router.push(`/books-edit/${id}`);
+    router.push(`/admin/books-edit/${id}`);
 }
 
 onMounted(fetchBooks);
@@ -78,7 +92,8 @@ onMounted(fetchBooks);
                     </div>
                     <div class="flex justify-between">
 
-                        <button @click="editBook(book.id)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <button @click="editBook(book.id)"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Edit
                         </button>
 

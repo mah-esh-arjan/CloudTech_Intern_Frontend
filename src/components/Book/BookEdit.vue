@@ -15,6 +15,8 @@ const bookData = ref({
     image_path: null,
 });
 
+const token = localStorage.getItem('token');
+
 const route = useRoute();
 const id = Number(route.params.id);
 const previewUrl = ref("");
@@ -22,7 +24,13 @@ const previewUrl = ref("");
 const showBook = async () => {
 
     try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/book-show/${id}`)
+        const response = await axios.get(`http://127.0.0.1:8000/api/book-show/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+        )
         if (response.data.code === 404) {
             bookData.value = null;
         }
@@ -48,13 +56,14 @@ const hanleBookEdit = async () => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`
                 }
             });
 
         if (response.data.status === 201) {
-            
+
             alert('Book has been update successfully');
-            router.push('/books-list');
+            router.push('/admin/books-list');
 
         }
     }
@@ -88,48 +97,53 @@ onMounted(showBook);
 
 
 <template>
-    <div class="p-4 max-w-md mx-auto border rounded-lg shadow-md flex flex-col gap-6" v-if="bookData">
-        <h2 class="text-xl font-bold mb-4">Editing Books</h2>
+    <section id="section" class="flex justify-center">
 
-        <form @submit.prevent="hanleBookEdit" class="space-y-4">
+        <div class="p-4 max-w-md mx-auto border rounded-lg shadow-md flex flex-col gap-6" v-if="bookData">
+            <h2 class="text-xl font-bold mb-4">Editing Books</h2>
 
-
-            <div class="flex flex-col items-center gap-[10px] my-auto mb-[20px]">
-                <span class="text-gray-700 underline">Book Photo:</span>
-                <img :src="previewUrl || `${url}/${bookData.image_path}`" alt="Not Found"
-                    class="h-[200px] w-[200px] bg-gray-300ee">
-            </div>
-
-            <div class="p-4 mt-4">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
-                    file</label>
-                <input
-                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    id="file_input" type="file" @change="imageUpload" />
-
-            </div>
+            <form @submit.prevent="hanleBookEdit" class="space-y-4">
 
 
-            <label class="block">
-                <span class="text-gray-700">Title:</span>
-                <input type="text" v-model="bookData.title" class="w-full p-2 border rounded" />
+                <div class="flex flex-col items-center gap-[10px] my-auto mb-[20px]">
+                    <span class="text-gray-700 underline">Book Photo:</span>
+                    <img :src="previewUrl || `${url}/${bookData.image_path}`" alt="Not Found"
+                        class="h-[200px] w-[200px] bg-gray-300ee">
+                </div>
 
-            </label>
+                <div class="p-4 mt-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                        file</label>
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        id="file_input" type="file" @change="imageUpload" />
 
-            <label class="block">
-                <span class="text-gray-700">Description:</span>
-                <textarea type="text" v-model="bookData.desc" class="w-full p-2 border rounded"> </textarea>
+                </div>
 
-            </label>
 
-            <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full "> Submit </button>
-        </form>
-    </div>
-    <div v-else>
-        <ErrorSlot>
-            <template #code>404</template>
-            <template #message> Books was not found in the database</template>
-        </ErrorSlot>
-    </div>
+                <label class="block">
+                    <span class="text-gray-700">Title:</span>
+                    <input type="text" v-model="bookData.title" class="w-full p-2 border rounded" />
+
+                </label>
+
+                <label class="block">
+                    <span class="text-gray-700">Description:</span>
+                    <textarea type="text" v-model="bookData.desc" class="w-full p-2 border rounded"> </textarea>
+
+                </label>
+
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full "> Submit </button>
+            </form>
+
+        </div>
+
+        <div v-else>
+            <ErrorSlot>
+                <template #code>404</template>
+                <template #message> Books was not found in the database</template>
+            </ErrorSlot>
+        </div>
+    </section>
 
 </template>

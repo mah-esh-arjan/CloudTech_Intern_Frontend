@@ -70,7 +70,7 @@ const handleEdit = async () => {
         if (response.data.status === 201) {
             alert('Student have been update successfully');
 
-            router.push('/student-list');
+            router.push(`/student/student-details/${id}`);
 
         }
 

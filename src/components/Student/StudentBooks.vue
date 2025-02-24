@@ -10,6 +10,8 @@ const imagePath = '/images/Kitab.png';
 
 
 const bookData = ref([]);
+const token = localStorage.getItem('token');
+
 
 const route = useRoute();
 const id = Number(route.params.id);
@@ -18,7 +20,12 @@ const getBook = async () => {
 
     try {
         const response = await axios.get(`http://127.0.0.1:8000/api/student-book/${id}`,
-        )
+        {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
         if (response.data.status === 404) {
             studentData.value = null;
         }

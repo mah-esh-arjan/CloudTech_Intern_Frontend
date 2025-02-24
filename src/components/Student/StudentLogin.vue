@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
+let id;
 
 const loginData = ref({
     name: '',
@@ -17,8 +18,12 @@ const handleLogin = async () => {
         const response = await axios.post('http://127.0.0.1:8000/api/student-login', loginData.value);
         console.log(response.data);
         if(response.data.status === 201){
-            localStorage.setItem("token",response.data.data);
-          router.push('/student-list');
+            localStorage.setItem("token",response.data.data.token);
+            localStorage.setItem("Student", JSON.stringify(response.data.data.Student) );
+            
+            id = response.data.data.Student.student_id;
+            
+            router.push(`/student/student-details/${id}`);
         }
     }
     catch (err) {

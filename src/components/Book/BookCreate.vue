@@ -10,6 +10,8 @@ const bookData = ref({
 
 });
 
+const token = localStorage.getItem('token');
+
 const previewUrl = ref("");
 
 const imageUpload = (event) => {
@@ -36,7 +38,11 @@ const handleBookSubmit = async () => {
 
         const response = await axios.post('http://127.0.0.1:8000/api/book-create',
             bookData.value,
-            { headers: { 'Content-Type': 'multipart/form-data' } }
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}`
+                }
+            }
         )
 
         if (response.data.status === 201) {
