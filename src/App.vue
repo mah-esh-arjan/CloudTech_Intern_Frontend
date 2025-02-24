@@ -12,14 +12,16 @@
       <router-link to="/slot">Slot</router-link>
       <router-link to="/tabs">Tabs</router-link>
       <router-link to="/about">About</router-link> -->
-      <router-link to="/student-list">Student-list</router-link>
-      <router-link to="/books-list">Books</router-link>
-      <router-link to="/create-book">Create-Books</router-link>
+      <router-link to="/admin/student-list">Student-list</router-link>
+      <router-link to="/admin/books-list">Books</router-link>
+      <router-link to="/admin/create-book">Create-Books</router-link>
 
-      <router-link to="/student-register">Register</router-link>
-      <router-link to="/student-login">Student-Login</router-link>
+      <router-link to="/student/student-register">Register</router-link>
+      <router-link to="/student/student-login">Student-Login</router-link>
+      <router-link to="/student/student-books-list">Student-BookList</router-link>
 
-      <router-link to="/admin-login" >Admin-Login</router-link>
+      <router-link to="/admin/admin-login" >Admin-Login</router-link>
+
 
     </nav>
     <router-view></router-view>

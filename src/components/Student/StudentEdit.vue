@@ -70,7 +70,7 @@ const handleEdit = async () => {
         if (response.data.status === 201) {
             alert('Student have been update successfully');
 
-            router.push('/student-list');
+            router.push(`/student/student-details/${id}`);
 
         }
 
@@ -104,71 +104,72 @@ onMounted(showStudent);
 
 
 <template>
-    <div class="p-4 max-w-md mx-auto border rounded-lg shadow-md flex flex-col gap-6" v-if="studentData">
-        <h2 class="text-xl font-bold mb-4">Editing Form</h2>
+    <section id="section" class="flex justify-center w-1/2">
+        <div class="p-4 w-96 mx-auto border rounded-lg shadow-md flex flex-col gap-6" v-if="studentData">
+            <h2 class="text-xl font-bold mb-4">Editing Form</h2>
 
-        <form @submit.prevent="handleEdit" class="space-y-4">
-
-
-            <div class="flex flex-col items-center gap-[10px] my-auto mb-[20px]">
-                <span class="text-gray-700 underline">Profile Picutre:</span> 
-                <img :src="previewUrl || `${url}/${studentData.image_path}`" alt="Not Found"
-                    class="rounded-full h-[200px] w-[200px] bg-gray-300 object-cover">
-            </div>
-
-            <div class="p-4 mt-4">
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
-                    file</label>
-                <input
-                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                    id="file_input" type="file" @change="imageUpload" />
-            </div>
+            <form @submit.prevent="handleEdit" class="space-y-4">
 
 
-            <label class="block">
-                <span class="text-gray-700">Username:</span>
-                <input type="text" v-model="studentData.name" class="w-full p-2 border rounded" />
-
-            </label>
-
-            <label class="block">
-                <span class="text-gray-700">Age:</span>
-                <input type="text" v-model="studentData.age" class="w-full p-2 border rounded" />
-
-            </label>
-
-            <label class="block">
-                <span class="text-gray-700">Gender:</span>
-
-                <div class="flex">
-                    <input type="radio" id="male" value="M" v-model="studentData.gender" />
-                    <label for="male"> Male</label>
+                <div class="flex flex-col items-center gap-[10px] my-auto mb-[20px]">
+                    <span class="text-gray-700 underline">Profile Picutre:</span>
+                    <img :src="previewUrl || `${url}/${studentData.image_path}`" alt="Not Found"
+                        class="rounded-full h-[200px] w-[200px] bg-gray-300 object-cover">
                 </div>
 
-                <div class="flex">
-                    <input type="radio" id="female" value="F" v-model="studentData.gender" />
-                    <label for="female"> Female</label>
+                <div class="p-4 mt-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
+                        file</label>
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        id="file_input" type="file" @change="imageUpload" />
                 </div>
 
-                <input type="radio" id="other" value="O" v-model="studentData.gender" />
-                <label for="other"> Other</label>
-            </label>
 
-            <div class="mt-8 mb-8">
-                <select v-model="studentData.course" class="w-full p-2 border rounded bg-white text-gray-700 ">
-                    <option value="Commerce">Commerce</option>
-                    <option value="Science">Science</option>
-                </select>
-            </div>
+                <label class="block">
+                    <span class="text-gray-700">Username:</span>
+                    <input type="text" v-model="studentData.name" class="w-full p-2 border rounded" />
 
-            <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full "> Submit </button>
-        </form>
-    </div>
-    <div v-else>
-        <ErrorSlot>
-            <template #code>404</template>
-            <template #message> Student doesn't exist</template>
-        </ErrorSlot>
-    </div>
+                </label>
 
+                <label class="block">
+                    <span class="text-gray-700">Age:</span>
+                    <input type="text" v-model="studentData.age" class="w-full p-2 border rounded" />
+
+                </label>
+
+                <label class="block">
+                    <span class="text-gray-700">Gender:</span>
+
+                    <div class="flex">
+                        <input type="radio" id="male" value="M" v-model="studentData.gender" />
+                        <label for="male"> Male</label>
+                    </div>
+
+                    <div class="flex">
+                        <input type="radio" id="female" value="F" v-model="studentData.gender" />
+                        <label for="female"> Female</label>
+                    </div>
+
+                    <input type="radio" id="other" value="O" v-model="studentData.gender" />
+                    <label for="other"> Other</label>
+                </label>
+
+                <div class="mt-8 mb-8">
+                    <select v-model="studentData.course" class="w-full p-2 border rounded bg-white text-gray-700 ">
+                        <option value="Commerce">Commerce</option>
+                        <option value="Science">Science</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full "> Submit </button>
+            </form>
+        </div>
+        <div v-else>
+            <ErrorSlot>
+                <template #code>404</template>
+                <template #message> Student doesn't exist</template>
+            </ErrorSlot>
+        </div>
+    </section>
 </template>

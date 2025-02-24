@@ -1,12 +1,15 @@
 <script setup>
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 
 const loginData = ref({
     email: '',
     password: '',
 });
+
+const router = useRouter();
 
 const handleLogin = async () => {
 
@@ -18,7 +21,8 @@ const handleLogin = async () => {
         );
 
         if (response.data.status === 201) {
-            alert('You Have been successfully Login');
+            localStorage.setItem("token",response.data.data)
+            router.push('/admin/student-list')
         }
 
     }
