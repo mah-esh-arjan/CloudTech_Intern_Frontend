@@ -1,8 +1,10 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import axios from 'axios';
+import { useStore } from 'vuex';
 
+const lms = useStore();
 
 const router = useRouter();
 const url = 'http://127.0.0.1:8000/images';

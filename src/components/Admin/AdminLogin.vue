@@ -2,7 +2,9 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
+const lms = useStore();
 
 const loginData = ref({
     email: '',
@@ -21,7 +23,9 @@ const handleLogin = async () => {
         );
 
         if (response.data.status === 201) {
-            localStorage.setItem("token",response.data.data)
+            localStorage.setItem("token", response.data.data.token);
+            lms.dispatch('updateRole', response.data.data.role);
+
             router.push('/admin/student-list')
         }
 
