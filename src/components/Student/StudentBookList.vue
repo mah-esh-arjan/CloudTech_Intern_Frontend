@@ -14,6 +14,7 @@ const token = localStorage.getItem('token');
 
 const router = useRouter();
 
+const bookIds = ref([]);
 
 const user = localStorage.getItem('user');
 
@@ -21,9 +22,9 @@ const parsedStudent = JSON.parse(user);
 const count = computed(() => lms.getters.getCount);
 const countLeft = ref(3 - count.value);
 
-watch(count, (newCount) => {
-    countLeft.value = 3 - newCount;
-});
+// watch(count, (newCount) => {
+//     countLeft.value = 3 - newCount;
+// });
 
 const id = parsedStudent.student_id;
 
@@ -42,6 +43,7 @@ const handleRent = async () => {
         )
         if (response.data.status === 201) {
             alert('Books have been rented succesfully');
+            router.push(`/student/student-books/${id}`);
         }
     }
 
@@ -55,7 +57,7 @@ const fetchBooks = async () => {
 
     try {
 
-        const response = await axios.get('http://127.0.0.1:8000/api/student-book-list',
+        const response = await axios.get(`http://127.0.0.1:8000/api/student-book-list/${id}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -63,7 +65,9 @@ const fetchBooks = async () => {
             });
 
         if (response.data.status = 200) {
-            books.value = response.data.data;
+            books.value = response.data.data.books;
+            bookIds.value = response.data.data.bookIds;
+            console.log(bookIds.value);
         }
 
     }
@@ -135,8 +139,21 @@ onMounted(fetchBooks);
                             </div>
 
                         </div>
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-fit"
-                            @click="handleCart(book.id)">Cart</button>
+
+                        <!-- button that gives acces to handlecart Button if the doesnt exists -->
+                        <div>
+                            <div v-if="bookIds.includes(book.id)">
+                                <h1
+                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded max-w-fit">
+                                    Rented</h1>
+                            </div>
+
+                            <div v-else>
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-fit"
+                                    @click="handleCart(book.id)">Cart</button>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

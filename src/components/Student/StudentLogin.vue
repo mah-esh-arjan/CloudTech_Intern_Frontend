@@ -26,9 +26,8 @@ const handleLogin = async () => {
             lms.dispatch('updateCount', response.data.data.count);
             lms.dispatch('updateUser', response.data.data.Student);
 
-
             id = response.data.data.Student.student_id;
-
+            localStorage.setItem("id", id);
             router.push(`/student/student-details/${id}`);
         }
     }

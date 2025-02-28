@@ -4,9 +4,12 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { CheckIcon } from '@heroicons/vue/20/solid';
+import { useStore } from 'vuex';
 
+const lms = useStore();
 const url = 'http://127.0.0.1:8000/BookImages';
 const imagePath = '/images/Kitab.png';
+
 
 
 const bookData = ref([]);
@@ -20,7 +23,7 @@ const getBook = async () => {
 
     try {
         const response = await axios.get(`http://127.0.0.1:8000/api/student-book/${id}`,
-        {
+            {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -29,8 +32,10 @@ const getBook = async () => {
         if (response.data.status === 404) {
             studentData.value = null;
         }
-        bookData.value = response.data.student.books
-        console.log(bookData);
+        bookData.value = response.data.student.books;
+        lms.dispatch('updateCount', response.data.count);
+        console.log(bookData.value);
+        console.log(response.data.count);
     }
     catch (err) {
         console.error('Error:', err);
@@ -61,7 +66,7 @@ onMounted(getBook);
 
                         <div class="mb-6!">
                             <h5 class=" text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ book.title
-                                }}
+                            }}
                             </h5>
 
                         </div>
