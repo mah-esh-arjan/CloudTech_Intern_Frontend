@@ -19,6 +19,7 @@ import AdminLogin from "@/components/Admin/AdminLogin.vue";
 import StudentDetails from "@/components/Student/StudentDetails.vue";
 import StudentBooks from "@/components/Student/StudentBooks.vue";
 import StudentBookList from "@/components/Student/StudentBookList.vue";
+import BookCart from "@/components/Student/BookCart.vue";
 
 const routes = [
   { path: "/tab", name: "root", component: Todo },
@@ -45,6 +46,7 @@ const routes = [
       { path: "student-edit/:id", component: StudentEdit },
       { path: "student-books/:id", component: StudentBooks },
       { path: "student-books-list/", component: StudentBookList },
+      { path: "student-cart", component: BookCart },
     ],
   },
   {

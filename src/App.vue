@@ -22,7 +22,7 @@ const handleProfileClick = (id) => {
 }
 
 const handlePortal = () => {
-  portal.value = !portal.value
+  router.push('/student/student-cart');
 }
 
 </script>
@@ -60,8 +60,7 @@ const handlePortal = () => {
       </div>
 
       <div v-if="user != null" class="flex items-center mr-4! gap-4">
-        <button @click="handlePortal">POrtal</button>
-        <h1>{{ portal ? 'Active' : 'Inactive' }}</h1>
+        <button class="text-white" @click="handlePortal">POrtal</button>
         <h1 class="text-white"> Books: {{ count }}</h1>
         <img class="h-[45px] w-[50px] rounded-full border-1 border-white object-cover"
           :src="`${studentImagePath}/${user.image_path}`" alt="User Not Found" />
