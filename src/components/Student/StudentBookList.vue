@@ -19,17 +19,14 @@ const bookIds = ref([]);
 const user = localStorage.getItem('user');
 
 const parsedStudent = JSON.parse(user);
-const count = computed(() => lms.getters.getCount);
-const countLeft = ref(3 - count.value);
+const count = computed(() => parseInt(lms.getters.getCount));
+const countLeft = computed(() => 3 - count.value);
 
-// watch(count, (newCount) => {
-//     countLeft.value = 3 - newCount;
-// });
 
 const id = parsedStudent.student_id;
 
 
-const cart = ref({ arrayId: [] });
+const cart = computed(() => lms.getters.getCart);
 
 const handleRent = async () => {
     try {
@@ -54,9 +51,7 @@ const handleRent = async () => {
 }
 
 const fetchBooks = async () => {
-
     try {
-
         const response = await axios.get(`http://127.0.0.1:8000/api/student-book-list/${id}`,
             {
                 headers: {
@@ -75,18 +70,25 @@ const fetchBooks = async () => {
         console.error("Error: ", err);
     }
 }
-const handleCart = (id) => {
-    if (countLeft.value > 0) {
-        if (!cart.value.arrayId.includes(id)) {
-            cart.value.arrayId.push(id);
-            countLeft.value--;
-            console.log(countLeft.value);
-            console.log(cart.value.arrayId);
+const handleCart = (book) => {
+    console.log(book);
+    try {
+        if (cart.value.includes(book)) {
+            return alert("Book already exists");
         }
+
+        if (countLeft.value <= 0) {
+            return alert("Book limit is full");
+        }
+        lms.commit('setCount', count.value + 1);
+        lms.commit('setCart', book);
     }
-    else {
-        alert('Cart is full');
+    catch (err) {
+        console.error("Error :", err);
     }
+
+
+
 }
 
 
@@ -97,7 +99,7 @@ onMounted(fetchBooks);
 
     <section id="section" class="flex justify-center flex-col ">
         <div>
-            {{ count }} {{ countLeft }}
+            <h1> Renting left: {{ countLeft }} </h1>
         </div>
         <div>
 
@@ -151,7 +153,7 @@ onMounted(fetchBooks);
                             <div v-else>
                                 <button
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-fit"
-                                    @click="handleCart(book.id)">Cart</button>
+                                    @click="handleCart(book)">Cart</button>
                             </div>
                         </div>
 

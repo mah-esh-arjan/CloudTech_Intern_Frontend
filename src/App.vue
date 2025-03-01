@@ -9,8 +9,7 @@ const router = useRouter();
 const role = computed(() => lms.getters.getRole);
 const user = computed(() => lms.getters.getUser);
 const count = computed(() => lms.getters.getCount);
-
-const portal = ref(false);
+const cartLength = computed(() => lms.getters.getCart.length);
 
 const logoimagePath = '/images/lms.png';
 const adminImagePath = '/images/admin.png';
@@ -60,15 +59,13 @@ const handlePortal = () => {
       </div>
 
       <div v-if="user != null" class="flex items-center mr-4! gap-4">
-        <button class="text-white" @click="handlePortal">POrtal</button>
+        <button class="text-white" @click="handlePortal">Cart: {{ cartLength }}</button>
         <h1 class="text-white"> Books: {{ count }}</h1>
         <img class="h-[45px] w-[50px] rounded-full border-1 border-white object-cover"
           :src="`${studentImagePath}/${user.image_path}`" alt="User Not Found" />
         <button @click="handleProfileClick(user.student_id)" class="text-white">{{ user.name }}</button>
       </div>
     </nav>
-    <div :class='portal ? "frontground" : "hideground"'> <button @click="handlePortal">X</button>
-    </div>
     <router-view></router-view>
   </div>
   <div v-else>
