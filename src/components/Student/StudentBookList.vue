@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 
-const books = ref();
+
 const url = 'http://127.0.0.1:8000/BookImages';
 const imagePath = '/images/Kitab.png';
 const lms = useStore();
@@ -14,7 +14,8 @@ const token = localStorage.getItem('token');
 
 const router = useRouter();
 
-const bookIds = ref([]);
+const books = ref();
+const bookIds = ref();
 
 const user = localStorage.getItem('user');
 
@@ -61,7 +62,7 @@ const fetchBooks = async () => {
 
         if (response.data.status = 200) {
             books.value = response.data.data.books;
-            bookIds.value = response.data.data.bookIds;
+            bookIds.value = response.data.data.bookIds || [];
             console.log(bookIds.value);
         }
 
