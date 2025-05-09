@@ -23,7 +23,6 @@ const parsedStudent = JSON.parse(user);
 const count = computed(() => parseInt(lms.getters.getCount));
 const countLeft = computed(() => 3 - count.value);
 
-
 const id = parsedStudent.student_id;
 
 
