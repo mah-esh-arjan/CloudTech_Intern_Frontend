@@ -28,27 +28,6 @@ const id = parsedStudent.student_id;
 
 const cart = computed(() => lms.getters.getCart);
 
-const handleRent = async () => {
-    try {
-        const response = await axios.post(`http://127.0.0.1:8000/api/student-book/${id}`,
-            cart.value,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        )
-        if (response.data.status === 201) {
-            alert('Books have been rented succesfully');
-            router.push(`/student/student-books/${id}`);
-        }
-    }
-
-    catch (err) {
-        console.error("Error:", err);
-    }
-
-}
 
 const fetchBooks = async () => {
     try {
@@ -106,15 +85,7 @@ onMounted(fetchBooks);
             <h2
                 class="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight mb-8! mx-auto! border border-black-500 p-2">
                 Student Book List</h2>
-            <div>
-                <div class="flex flex-row">
-                    <span>Items : </span>
-                    <h3 v-for="(item, index) in cart.arrayId" :key="index">{{ item }} , </h3>
 
-                </div>
-                <button @click="handleRent"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Rent it</button>
-            </div>
 
             <div class="grid grid-cols-4 gap-4">
                 <div v-for="book in books" :key="book.id"

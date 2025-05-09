@@ -41,6 +41,10 @@ const lms = createStore({
     setPopCart(state,item){
       state.cart = state.cart.filter(cartItem => cartItem.id !== item.id);
       localStorage.setItem("cart",JSON.stringify(state.cart));
+    },
+    setClearCart(state){
+      state.cart = [];
+      localStorage.setItem("cart",JSON.stringify([]));
     }
   },
   actions: {
@@ -53,6 +57,9 @@ const lms = createStore({
     updateUser({ commit }, user) {
       commit("setUser", user);
     },
+    updateClear( {commit}, cart) {
+      commit("setClearCart",cart);
+    }
   },
 });
 
