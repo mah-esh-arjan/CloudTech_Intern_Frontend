@@ -2,9 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { computed, onMounted, reactive, ref } from 'vue';
 import axios from 'axios';
-import { useStore } from 'vuex';
 
-const lms = useStore();
 
 const router = useRouter();
 const url = 'http://127.0.0.1:8000/images';
@@ -38,8 +36,9 @@ const showStudentDetails = async () => {
         if (response.data.status === 404) {
             studentData.value = null;
         }
-        studentData.value = response.data.student
-        bookCount.value = response.data.count
+        studentData.value = response.data.student;
+        bookCount.value = response.data.count;
+
     }
     catch (err) {
         console.error('Error:', err);

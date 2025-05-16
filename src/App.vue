@@ -20,6 +20,11 @@ const handleProfileClick = (id) => {
 
 }
 
+const handleLogout = () => {
+  localStorage.clear();
+  window.location.href = '/';
+}
+
 const handlePortal = () => {
   router.push('/student/student-cart');
 }
@@ -76,16 +81,16 @@ const handlePortal = () => {
         <button @click="handlePortal" class="relative text-white text-lg flex items-center gap-2">
           <div class="relative inline-block">
             <!-- Cart Badge -->
-         
+
 
             <!-- Cart Icon & Text -->
             <button
               class="flex items-center text-white text-lg gap-2 transition-all duration-300 hover:text-gray-300 hover:scale-110">
               <font-awesome-icon :icon="['fas', 'shopping-cart']" class="text-2xl" />
               <span
-              class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
-              {{ cartLength }}
-            </span>
+                class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                {{ cartLength }}
+              </span>
             </button>
           </div>
         </button>
@@ -98,7 +103,7 @@ const handlePortal = () => {
           :src="`${studentImagePath}/${user.image_path}`" alt="User Not Found" />
 
         <!-- User Name -->
-        <button @click="handleProfileClick(user.student_id)" class="text-white text-lg font-semibold hover:underline">
+        <button @click="handleLogout" class="text-white text-lg font-semibold hover:underline">
           {{ user.name }}
         </button>
       </div>

@@ -15,21 +15,20 @@ const token = localStorage.getItem('token');
 const router = useRouter();
 
 const books = ref();
-const bookIds = ref();
 
 const user = localStorage.getItem('user');
 
 const parsedStudent = JSON.parse(user);
 const count = computed(() => parseInt(lms.getters.getCount));
 const countLeft = computed(() => 3 - count.value);
-
-const id = parsedStudent.student_id;
-
-
 const cart = computed(() => lms.getters.getCart);
+const id = parsedStudent.student_id;
+const bookIds = computed(() => lms.getters.getBookIds || []);
+
 
 
 const fetchBooks = async () => {
+    console.log(bookIds.value);
     try {
         const response = await axios.get(`http://127.0.0.1:8000/api/student-book-list/${id}`,
             {
@@ -40,7 +39,6 @@ const fetchBooks = async () => {
 
         if (response.data.status = 200) {
             books.value = response.data.data.books;
-            bookIds.value = response.data.data.bookIds || [];
             console.log(bookIds.value);
         }
 
@@ -59,6 +57,8 @@ const handleCart = (book) => {
         if (countLeft.value <= 0) {
             return alert("Book limit is full");
         }
+        // bookIds.value.push(book.id);
+        lms.commit('setBookIds',book.id)
         lms.commit('setCount', count.value + 1);
         lms.commit('setCart', book);
     }

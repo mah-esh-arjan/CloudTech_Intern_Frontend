@@ -10,7 +10,7 @@ const url = 'http://127.0.0.1:8000/BookImages';
 const lms = useStore();
 const carts = computed(() => lms.getters.getCart);
 const count = computed(() => parseInt(lms.getters.getCount));
-const arrayId = ref([]);
+const arrayId = computed(() => carts.value.map(item => item.id));
 const user = localStorage.getItem('user');
 const token = localStorage.getItem('token');
 const router = useRouter();
@@ -27,12 +27,22 @@ const getCartArrayId = () => {
 
 onMounted(() => {
     getCartArrayId();
+    console.log(arrayId.value)
 });
 
 const handleRemove = (cart) => {
     lms.commit("setPopCart", cart);
+    lms.commit('setPopBookIds', cart.id);
     lms.commit('setCount', count.value - 1);
     alert('Cart has been removed');
+}
+
+const handleClear = () => {
+    lms.commit('setCount', count.value - carts.value.length);
+
+    lms.commit('setPopBookIds', arrayId.value);
+
+    lms.commit("setClearCart");
 }
 
 const handleRent = async () => {
@@ -48,7 +58,7 @@ const handleRent = async () => {
         if (response.data.status === 201) {
             lms.dispatch('updateClear', arrayId.value);
             alert('Books have been rented succesfully');
-            
+
             router.push(`/student/student-books/${id}`);
         }
         console.log(arrayId.value);
@@ -73,7 +83,10 @@ const handleRent = async () => {
 
                 <button @click="handleRent"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Rent it</button>
+                <button @click="handleClear"
+                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Clear</button>
             </div>
+
         </div>
 
         <div v-for="cart in carts" :key="cart.id"

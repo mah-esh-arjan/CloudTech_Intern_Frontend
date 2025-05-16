@@ -25,6 +25,7 @@ const handleLogin = async () => {
             lms.dispatch('updateRole', response.data.data.role);
             lms.dispatch('updateCount', response.data.data.count);
             lms.dispatch('updateUser', response.data.data.Student);
+            lms.dispatch('updateBookIds', response.data.data.bookIds);
 
             id = response.data.data.Student.student_id;
             localStorage.setItem("id", id);
