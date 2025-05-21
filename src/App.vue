@@ -10,6 +10,7 @@ const role = computed(() => lms.getters.getRole);
 const user = computed(() => lms.getters.getUser);
 const count = computed(() => lms.getters.getCount);
 const cartLength = computed(() => lms.getters.getCart.length);
+const id = Number(localStorage.getItem("id"));
 
 const logoimagePath = '/images/lms.png';
 const adminImagePath = '/images/admin.png';
@@ -29,6 +30,11 @@ const handlePortal = () => {
   router.push('/student/student-cart');
 }
 
+const isDropdownOpen = ref(false)
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value
+}
+
 </script>
 
 <template>
@@ -41,7 +47,21 @@ const handlePortal = () => {
 
       <div class="admin-profile">
         <img :src="adminImagePath" alt="Admin" />
-        <h1>Admin</h1>
+        <div class="relative inline-block text-left" @click="toggleDropdown">
+          <button class="text-white text-lg font-semibold hover:underline">
+            Admin
+          </button>
+
+          <div v-if="isDropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+            <ul class="py-1">
+              <li>
+                <button @click="handleLogout" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -70,10 +90,12 @@ const handlePortal = () => {
     <nav class="nav">
       <div class="flex">
         <img class="h-[45px] w-[75px] object-contain ml-4!" :src="logoimagePath" alt="Not Found" />
-        <router-link to="/student/student-register">Register</router-link>
-        <router-link to="/student/student-login">Student-Login</router-link>
-        <router-link to="/student/student-books-list">Student-BookList</router-link>
-        <router-link to=""><button @click="handleProfileClick(user.student_id)">Student-Details</button></router-link>
+        <!-- <router-link to="/student/student-register">Register</router-link>
+        <router-link to="/student/student-login">Student-Login</router-link> -->
+        <router-link to="/student/home">Home</router-link>
+        <router-link to="/student/student-books-list">Library</router-link>
+        <router-link to=""><button @click="handleProfileClick(user.student_id)">Profile</button></router-link>
+        <router-link :to="`/student/student-books/${id}`">Rented Books</router-link>
       </div>
 
       <div v-if="user != null" class="flex items-center gap-3 mr-4! relative">
@@ -103,9 +125,21 @@ const handlePortal = () => {
           :src="`${studentImagePath}/${user.image_path}`" alt="User Not Found" />
 
         <!-- User Name -->
-        <button @click="handleLogout" class="text-white text-lg font-semibold hover:underline">
-          {{ user.name }}
-        </button>
+        <div class="relative inline-block text-left" @click="toggleDropdown">
+          <button class="text-white text-lg font-semibold hover:underline">
+            {{ user.name }}
+          </button>
+
+          <div v-if="isDropdownOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+            <ul class="py-1">
+              <li>
+                <button @click="handleLogout" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
     </nav>
