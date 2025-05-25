@@ -9,6 +9,8 @@ import lms from "./store/lms";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import 'flowbite';
+
 
 library.add(faShoppingCart);
 

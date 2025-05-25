@@ -5,30 +5,41 @@ import Card from '../Prop/Card.vue';
 let cards = [
     {
         id: 1,
-        title: "Learn Vue Router",
+        title: "Registration & Login",
         description:
-            "Understand how to set up and use Vue Router for navigation in a Vue.js application.",
+            "Allows students to create an account, log in securely, and manage their access to the system.",
     },
     {
         id: 2,
-        title: "Introduction to Vue.js",
+        title: "Book Browsing & Listing",
         description:
-            "A beginner-friendly guide to understanding Vue.js and its core concepts.",
+            "Students can explore and view the available collection of books with relevant details.",
     },
     {
         id: 3,
-        title: "State Management with Vuex",
+        title: "Cart & Checkout System",
         description:
-            "Learn how to manage global state in a Vue.js application using Vuex.",
+            "Students can add books to their cart and rent them, with a checkout cart system.",
     },
     {
         id: 4,
-        title: "Working with Slots in Vue",
+        title: "Rental Limit Enforcement",
         description:
-            "Explore how to use slots for creating flexible and reusable components in Vue.js.",
+            "Each student can rent up to three books at a time",
     },
-]
-
+    {
+        id: 5,
+        title: "Profile & Rental History",
+        description:
+            "Students can update their profile and view a list of books they've rented.",
+    },
+    {
+        id: 6,
+        title: "Admin Management Panel",
+        description:
+            "Admins can perform full CRUD operations for books and students via a dedicated interface.",
+    },
+];
 </script>
 
 <template>
@@ -39,12 +50,12 @@ let cards = [
 
 
             <div class="flex items-center gap-2 !my-8 flex-col">
-                <h1 class="text-xl font-bold">LMS Features</h1>
-                <p class="text-sm text-gray-600">A brief sample of LMS:</p>
+                <h1 class="text-3xl font-extrabold text-gray-800 tracking-tight">LMS Features</h1>
+                <p class="text-base text-gray-500 mt-1">Explore what makes our Library Management System does</p>
             </div>
 
             <div class="grid grid-cols-12 gap-8 !my-16 max-w-6xl mx-auto">
-                <div v-for="card in cards" :key="card.id" class="col-span-4 relative group">
+                <div v-for="card in cards" :key="card.id" class="col-span-4 relative group !my-5">
 
                     <div class="group">
                         <svg viewBox="0 0 375 240" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
