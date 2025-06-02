@@ -11,12 +11,15 @@ import slider4 from '@/assets/images/slider4.png';
     <div class="bg-gray-100	">
         <section id="section">
 
-            <div class="flex items-center justify-center !my-8">
-
-                <h1 class="text-2xl font-semibold text-gray-800 tracking-tight">
-                    Some Snapshots
-                </h1>
-
+            <div class="flex items-center justify-center !my-10">
+                <h2 class="text-3xl font-bold text-indigo-600 tracking-tight flex items-center gap-3 animate-fade-in">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-indigo-500" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 10l4.553 2.276A1 1 0 0120 13.118V17a1 1 0 01-.553.894L15 20m0-10V4m0 6L9 14m0 0v6m0-6L4.553 17.894A1 1 0 014 17V13.118a1 1 0 01.553-.842L9 10" />
+                    </svg>
+                    Short Snapshots
+                </h2>
             </div>
 
             <div id="indicators-carousel" class="relative w-full" data-carousel="static">

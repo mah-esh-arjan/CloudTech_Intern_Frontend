@@ -25,7 +25,7 @@ let cards = [
         id: 4,
         title: "Rental Limit Enforcement",
         description:
-            "Each student can rent up to three books at a time",
+            "Each student can rent up to three books at a time, while rented books cannot be re-rented",
     },
     {
         id: 5,

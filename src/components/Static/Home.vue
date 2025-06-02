@@ -12,7 +12,7 @@ import Librare from '@/assets/images/Librare.jpg';
         <main>
 
 
-            <div class="relative pt-48 pb-12 bg-black xl:pt-60 sm:pb-16 lg:pb-32 xl:pb-48 2xl:pb-56 overflow-hidden">
+            <div class="h-screen relative pt-48 pb-12 bg-black xl:pt-60 sm:pb-16 lg:pb-32 xl:pb-48 2xl:pb-56 overflow-hidden">
                 <div class="absolute inset-0 bg-fixed bg-center bg-cover z-0 brightness-50"
                     :style="`background-image: url(${Librare})`"></div>
 

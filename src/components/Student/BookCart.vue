@@ -32,7 +32,7 @@ onMounted(() => {
 
 const handleRemove = (cart) => {
     lms.commit("setPopCart", cart);
-    lms.commit('setPopBookIds', cart.id);
+    lms.commit('setPopBookIds', [cart.id]);
     lms.commit('setCount', count.value - 1);
     alert('Cart has been removed');
 }
@@ -75,7 +75,6 @@ const handleRent = async () => {
 <template>
 
     <section id="section">
-        {{ typeof count }}
 
         <div>
             <h1 class="text-4xl font-bold">Checkout List</h1>
