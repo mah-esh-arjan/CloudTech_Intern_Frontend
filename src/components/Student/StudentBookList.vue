@@ -3,6 +3,7 @@ import axios from 'axios';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import Footer from '@/components/Static/Footer.vue'
 
 
 
@@ -58,7 +59,7 @@ const handleCart = (book) => {
             return alert("Book limit is full");
         }
         // bookIds.value.push(book.id);
-        lms.commit('setBookIds',book.id)
+        lms.commit('setBookIds', book.id)
         lms.commit('setCount', count.value + 1);
         lms.commit('setCart', book);
     }
@@ -135,4 +136,5 @@ onMounted(fetchBooks);
         </div>
 
     </section>
+    <Footer />
 </template>
