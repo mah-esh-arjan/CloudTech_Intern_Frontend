@@ -74,33 +74,33 @@ onMounted(showStudentDetails);
 
             <!-- Student Details -->
             <div class="space-y-2 text-gray-700">
-                <div class="flex justify-between border-b pb-2">
+                <div class="flex justify-between border-b pt-2">
                     <span class="font-medium">Username:</span>
                     <span class="text-gray-900 font-semibold">{{ studentData.name }}</span>
                 </div>
 
-                <div class="flex justify-between border-b pb-2">
+                <div class="flex justify-between border-b pt-2">
                     <span class="font-medium">Age:</span>
                     <span class="text-gray-900 font-semibold">{{ studentData.age }}</span>
                 </div>
 
-                <div class="flex justify-between border-b pb-2">
+                <div class="flex justify-between border-b pt-2">
                     <span class="font-medium">Gender:</span>
                     <span class="text-gray-900 font-semibold">{{ studentData.gender }}</span>
                 </div>
 
-                <div class="flex justify-between border-b pb-2">
+                <div class="flex justify-between border-b pt-2">
                     <span class="font-medium">Course:</span>
                     <span class="text-gray-900 font-semibold">{{ studentData.course }}</span>
                 </div>
 
 
-                <div class="flex justify-between border-b pb-2">
+                <div class="flex justify-between border-b pt-2">
                     <span class="font-medium">Number of books taken:</span>
                     <span class="text-gray-900 font-semibold">{{ bookCount }}</span>
                 </div>
 
-                <div class="flex justify-between border-b pb-2">
+                <div class="flex justify-between border-b py-2">
                     <button @click="handleEdit(studentData.student_id)"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
 
