@@ -9,7 +9,7 @@ import AboutTeam from "@/components/Prop/AboutTeam.vue";
 import AboutCompany from "@/components/Prop/AboutCompany.vue";
 import StudentRegister from "@/components/Student/StudentRegister.vue";
 import StudentLogin from "@/components/Student/StudentLogin.vue";
-import StudentList from "@/components/Student/StudentList.vue";
+import StudentList from "@/components/Admin/StudentList.vue";
 import StudentEdit from "@/components/Student/StudentEdit.vue";
 import SoftDelete from "@/components/SoftDelete.vue";
 import BookList from "@/components/Book/BookList.vue";
@@ -20,6 +20,7 @@ import StudentDetails from "@/components/Student/StudentDetails.vue";
 import StudentBooks from "@/components/Student/StudentBooks.vue";
 import StudentBookList from "@/components/Student/StudentBookList.vue";
 import BookCart from "@/components/Student/BookCart.vue";
+import Home from "@/components/Static/Home.vue";
 
 const routes = [
   { path: "/tab", name: "root", component: Todo },
@@ -47,6 +48,7 @@ const routes = [
       { path: "student-books/:id", component: StudentBooks },
       { path: "student-books-list/", component: StudentBookList },
       { path: "student-cart", component: BookCart },
+      { path: "home", component: Home },
     ],
   },
   {

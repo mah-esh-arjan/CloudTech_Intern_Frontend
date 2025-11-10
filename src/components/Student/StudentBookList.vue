@@ -3,9 +3,10 @@ import axios from 'axios';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import Footer from '@/components/Static/Footer.vue'
 
 
-const books = ref();
+
 const url = 'http://127.0.0.1:8000/BookImages';
 const imagePath = '/images/Kitab.png';
 const lms = useStore();
@@ -14,49 +15,22 @@ const token = localStorage.getItem('token');
 
 const router = useRouter();
 
-const bookIds = ref([]);
+const books = ref();
 
 const user = localStorage.getItem('user');
 
 const parsedStudent = JSON.parse(user);
-const count = computed(() => lms.getters.getCount);
-const countLeft = ref(3 - count.value);
-
-// watch(count, (newCount) => {
-//     countLeft.value = 3 - newCount;
-// });
-
+const count = computed(() => parseInt(lms.getters.getCount));
+const countLeft = computed(() => 3 - count.value);
+const cart = computed(() => lms.getters.getCart);
 const id = parsedStudent.student_id;
+const bookIds = computed(() => lms.getters.getBookIds || []);
 
 
-const cart = ref({ arrayId: [] });
-
-const handleRent = async () => {
-    try {
-        const response = await axios.post(`http://127.0.0.1:8000/api/student-book/${id}`,
-            cart.value,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        )
-        if (response.data.status === 201) {
-            alert('Books have been rented succesfully');
-            router.push(`/student/student-books/${id}`);
-        }
-    }
-
-    catch (err) {
-        console.error("Error:", err);
-    }
-
-}
 
 const fetchBooks = async () => {
-
+    console.log(bookIds.value);
     try {
-
         const response = await axios.get(`http://127.0.0.1:8000/api/student-book-list/${id}`,
             {
                 headers: {
@@ -66,7 +40,6 @@ const fetchBooks = async () => {
 
         if (response.data.status = 200) {
             books.value = response.data.data.books;
-            bookIds.value = response.data.data.bookIds;
             console.log(bookIds.value);
         }
 
@@ -75,18 +48,27 @@ const fetchBooks = async () => {
         console.error("Error: ", err);
     }
 }
-const handleCart = (id) => {
-    if (countLeft.value > 0) {
-        if (!cart.value.arrayId.includes(id)) {
-            cart.value.arrayId.push(id);
-            countLeft.value--;
-            console.log(countLeft.value);
-            console.log(cart.value.arrayId);
+const handleCart = (book) => {
+    console.log(book);
+    try {
+        if (cart.value.includes(book)) {
+            return alert("Book already exists");
         }
+
+        if (countLeft.value <= 0) {
+            return alert("Book limit is full");
+        }
+        // bookIds.value.push(book.id);
+        lms.commit('setBookIds', book.id)
+        lms.commit('setCount', count.value + 1);
+        lms.commit('setCart', book);
     }
-    else {
-        alert('Cart is full');
+    catch (err) {
+        console.error("Error :", err);
     }
+
+
+
 }
 
 
@@ -97,22 +79,14 @@ onMounted(fetchBooks);
 
     <section id="section" class="flex justify-center flex-col ">
         <div>
-            {{ count }} {{ countLeft }}
+            <h1> Renting left: {{ countLeft }} </h1>
         </div>
         <div>
 
             <h2
                 class="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight mb-8! mx-auto! border border-black-500 p-2">
                 Student Book List</h2>
-            <div>
-                <div class="flex flex-row">
-                    <span>Items : </span>
-                    <h3 v-for="(item, index) in cart.arrayId" :key="index">{{ item }} , </h3>
 
-                </div>
-                <button @click="handleRent"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Rent it</button>
-            </div>
 
             <div class="grid grid-cols-4 gap-4">
                 <div v-for="book in books" :key="book.id"
@@ -151,7 +125,7 @@ onMounted(fetchBooks);
                             <div v-else>
                                 <button
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-fit"
-                                    @click="handleCart(book.id)">Cart</button>
+                                    @click="handleCart(book)">Cart</button>
                             </div>
                         </div>
 
@@ -162,4 +136,5 @@ onMounted(fetchBooks);
         </div>
 
     </section>
+    <Footer />
 </template>

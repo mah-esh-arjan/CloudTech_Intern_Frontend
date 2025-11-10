@@ -69,12 +69,15 @@ onMounted(fetchBooks);
 
 <template>
 
+    <h1 class="text-xl font-bold">List of books</h1>
     <div class="grid grid-cols-4 gap-4" id="section">
+
         <div v-for="book in books" :key="book.id"
             class="flex-col max-h-[375px] bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
 
             <img class="h-1/2 w-full" :src="book.image_path === null ? imagePath : `${url}/${book.image_path}`"
                 alt="Not Found" />
+
 
             <div class="p-5 flex flex-col justify-between">
 
